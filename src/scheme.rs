@@ -85,12 +85,11 @@ impl RedirectScheme {
     }
 }
 
-impl<S, B> Transform<S> for RedirectScheme
+impl<S, B> Transform<S, ServiceRequest> for RedirectScheme
 where
-    S: Service<Request = ServiceRequest, Response = ServiceResponse<B>, Error = Error>,
+    S: Service<ServiceRequest, Response = ServiceResponse<B>, Error = Error>,
     S::Future: 'static,
 {
-    type Request = ServiceRequest;
     type Response = ServiceResponse<B>;
     type Error = Error;
     type InitError = ();

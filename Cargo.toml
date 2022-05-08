@@ -12,8 +12,8 @@ keywords = ["actix-web", "middleware", "redirect", "https", "ssl"]
 categories = ["web-programming", "web-programming::http-server"]
 
 [dependencies]
-actix-service = "1.0.6"
-actix-web = { version = "3", default-features = false }
+actix-service = "2"
+actix-web = { version = "4", default-features = false }
 futures = "0.3"
 
 [badges]
