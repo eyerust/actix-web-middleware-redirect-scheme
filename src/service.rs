@@ -9,6 +9,7 @@ use actix_web::{
     Error, HttpResponse,
 };
 use futures::future::{ok, Either, LocalBoxFuture, Ready};
+use log::{debug, info};
 use std::task::{Context, Poll};
 
 pub struct RedirectSchemeService<S> {
@@ -35,6 +36,7 @@ where
             || (!self.https_to_http && req.connection_info().scheme() == "https")
             || (self.https_to_http && req.connection_info().scheme() == "http")
         {
+            debug!("Not redirecting");
             Box::pin(self.service.call(req))
         } else {
             let host = req.connection_info().host().to_owned();
@@ -63,6 +65,7 @@ where
                 response
                     .headers_mut()
                     .insert(header::LOCATION, HeaderValue::from_str(&url).unwrap());
+                info!("Redirected to {}", url);
 
                 Ok(ServiceResponse::new(request, response))
             })
